@@ -22,15 +22,15 @@ class Team
     private string $country;
 
     #[ORM\Column(type: "float")]
-    private float $moneyBalance;
+    private float|int $moneyBalance;
 
-    #[ORM\OneToMany(mappedBy: "team", targetEntity: Player::class)]
+    #[ORM\OneToMany(mappedBy: "team", targetEntity: Player::class, cascade: ['persist'])]
     private Collection $players;
 
-    #[ORM\OneToMany(mappedBy: "buyer", targetEntity: PlayerTransfer::class)]
+    #[ORM\OneToMany(mappedBy: "buyer", targetEntity: PlayerTransfer::class, cascade: ['persist'])]
     private Collection $purchasedPlayers;
 
-    #[ORM\OneToMany(mappedBy: "seller", targetEntity: PlayerTransfer::class)]
+    #[ORM\OneToMany(mappedBy: "seller", targetEntity: PlayerTransfer::class, cascade: ['persist'])]
     private Collection $soldPlayers;
     public function __construct()
     {
@@ -73,7 +73,7 @@ class Team
         return $this->moneyBalance;
     }
 
-    public function setMoneyBalance(float $moneyBalance): self
+    public function setMoneyBalance(float|int $moneyBalance): self
     {
         $this->moneyBalance = $moneyBalance;
 

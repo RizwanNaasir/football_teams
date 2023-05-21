@@ -1,7 +1,5 @@
 <template>
-  <n-card style="padding: 4rem" title="Football Teams">
-    <TeamsTable/>
-  </n-card>
+  <teams-table/>
 </template>
 
 <script setup lang="ts">

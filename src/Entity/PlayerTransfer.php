@@ -13,18 +13,16 @@ class PlayerTransfer
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Player::class, inversedBy: "transfers")]
+    #[ORM\ManyToOne(targetEntity: Player::class, cascade: ['persist'], inversedBy: "transfers")]
     #[ORM\JoinColumn(nullable: false)]
-
     private Player $player;
 
-    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: "purchasedPlayers")]
+    #[ORM\ManyToOne(targetEntity: Team::class, cascade: ['persist'], inversedBy: "purchasedPlayers")]
     #[ORM\JoinColumn(nullable: false)]
     private Team $buyer;
 
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\JoinColumn(nullable: false)]
-
     private Team $seller;
 
     #[ORM\Column(type: "datetime")]

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Player;
+use App\Entity\Team;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -63,4 +64,19 @@ class PlayerRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+    public function createOrGetPlayer(array $playerData, Team $team): ?Player
+    {
+        $player = $this->findOneBy(['name' => $playerData['name'], 'surname' => $playerData['surname']]);
+
+        if (!$player) {
+            $player = new Player();
+            $player->setTeam($team);
+            $player->setName($playerData['name']);
+            $player->setSurName($playerData['surname']);
+            $this->save($player, true);
+        }
+
+        return $player;
+    }
 }

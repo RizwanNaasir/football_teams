@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PlayerRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: PlayerRepository::class)]
 class Player
@@ -19,8 +20,9 @@ class Player
     #[ORM\Column(type: "string", length: 255)]
     private string $surname;
 
-    #[ORM\ManyToOne(targetEntity: Team::class, inversedBy: "players")]
+    #[ORM\ManyToOne(targetEntity: Team::class, cascade: ['persist'], inversedBy: "players")]
     #[ORM\JoinColumn(nullable: false)]
+    #[Ignore]
     private ?Team $team = null;
     public function getId(): ?int
     {

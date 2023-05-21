@@ -1,14 +1,15 @@
 import {client} from "./client";
 import {reactive} from "vue";
+import {Team} from "@/components/types/Team";
 
 export type TeamsRefT = {
     teams: {
-        data: [],
+        data: Team[],
         pagination: {
             total: number,
+            pages: number,
             page: number,
-            per_page: number,
-            page_count: number
+            perPage: number
         }
     },
     loading: boolean,
@@ -19,24 +20,19 @@ export const teamsRef: TeamsRefT = reactive({
         data: [],
         pagination: {
             total: 0,
+            pages: 0,
             page: 0,
-            per_page: 0,
-            page_count: 0
+            perPage: 0
         }
     },
     loading: true,
     error: null,
 })
-
-export type ParamsT = {
+type Params = {
     page: number,
-    filter: {
-        name: string|null,
-        family: string|null,
-    }
 }
-export const getFruits = async (params: ParamsT) => {
-    return await client.get("/teams", {params: params})
+export const getTeams = async (params: Params) => {
+    return await client.get("/team" , {params})
         .then((response) => {
             teamsRef.teams = response.data;
             teamsRef.loading = false;

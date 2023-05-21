@@ -63,4 +63,16 @@ class TeamRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function creatOrGetTeam(array $team): ?Team
+    {
+        $teamEntity = $this->findOneBy(['name' => $team['name']]);
+        if (!$teamEntity) {
+            $teamEntity = new Team();
+            $teamEntity->setName($team['name']);
+            $teamEntity->setCountry($team['country']);
+            $teamEntity->setMoneyBalance($team['moneyBalance']);
+            $this->save($teamEntity, true);
+        }
+        return $teamEntity;
+    }
 }
