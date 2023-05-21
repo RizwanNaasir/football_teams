@@ -1,14 +1,14 @@
 <template>
-  <h1>{{ msg }}</h1>
+  <n-card style="padding: 4rem" title="Football Teams">
+    <TeamsTable/>
+  </n-card>
 </template>
 
 <script setup lang="ts">
-
 import {defineComponent} from "vue";
+import TeamsTable from "@/components/TeamsTable.vue";
 
 defineComponent({
   name: 'App',
 })
-const msg = 'Hello Vue 3 + Vite + Typescript'
-
 </script>
