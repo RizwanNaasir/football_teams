@@ -1,0 +1,15 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "license": "UNLICENSED",
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^4.2.3",
+        "vite": "^4.0",
+        "vite-plugin-symfony": "^0.7.2",
+        "vue": "3.3.4",
+        "vue-router": "4.2.1"
+    }
+}
