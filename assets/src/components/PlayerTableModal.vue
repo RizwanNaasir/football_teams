@@ -16,7 +16,7 @@
   </n-modal>
 </template>
 <script setup lang="ts">
-import {Player} from "@/components/types/Player";
+import {Player} from "@/types/Player";
 import {watch, ref} from "vue";
 
 const modal = ref(false);

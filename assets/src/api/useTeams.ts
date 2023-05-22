@@ -1,6 +1,6 @@
 import {client} from "./client";
 import {reactive} from "vue";
-import {Team} from "@/components/types/Team";
+import {Team} from "@/types/Team";
 
 export type TeamsRefT = {
     teams: {
@@ -32,7 +32,7 @@ type Params = {
     page: number,
 }
 export const getTeams = async (params: Params) => {
-    return await client.get("/team" , {params})
+    return await client.get("/team", {params})
         .then((response) => {
             teamsRef.teams = response.data;
             teamsRef.loading = false;
@@ -43,3 +43,16 @@ export const getTeams = async (params: Params) => {
             teamsRef.loading = false;
         });
 };
+
+export const addNewTeam = async (data: Team) => {
+    return await client.post("/team/add", data)
+        .then((response) => {
+            teamsRef.loading = false;
+            return response.data;
+        }).catch((error) => {
+            teamsRef.error = error;
+            teamsRef.loading = false;
+        }).finally(() => {
+            teamsRef.loading = false;
+        });
+}

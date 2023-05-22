@@ -25,7 +25,7 @@ class TeamController extends AbstractController
         $query = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1), // Get the current page from the request
-            $request->query->getInt('perPage', 2) // Number of items per page
+            $request->query->getInt('perPage', 10) // Number of items per page
         );
         return $this->paginate($query);
     }
@@ -50,7 +50,7 @@ class TeamController extends AbstractController
     #[Route('/team/add', name: 'team_add',methods: ['POST'])]
     public function add(Request $request, EntityManagerInterface $entity): Response
     {
-        $teamFromRequest = $request->toArray()['team'];
+        $teamFromRequest = $request->toArray();
         /** @var TeamRepository $teamRepository */
         $teamRepository = $entity->getRepository(Team::class);
         $team = $teamRepository->creatOrGetTeam($teamFromRequest);
@@ -62,6 +62,9 @@ class TeamController extends AbstractController
                 $team->addPlayer($playerObj);
             }
         }
-        return $this->json($team);
+        return $this->json([
+            'message' => 'Team added successfully',
+            'data' => $team
+        ]);
     }
 }

@@ -4,6 +4,7 @@
       <n-button
           style="margin-top: 10px"
           size="small"
+          @click="() => toggleAddNewModal = !toggleAddNewModal"
       >
         Add Team and Players
       </n-button>
@@ -15,6 +16,7 @@
         :loading="teamsRef.loading"
     />
     <player-table-modal :showModal="showModal" :players="playersRef"/>
+    <add-new-team-modal :visible="toggleAddNewModal" :players="playersRef"/>
   </n-card>
 </template>
 <script setup lang="ts">
@@ -22,12 +24,14 @@ import {h, onMounted, reactive, ref} from 'vue'
 import type {DataTableColumns} from 'naive-ui'
 import {NButton, NDataTable} from "naive-ui";
 import {getTeams, teamsRef} from "@/api/useTeams";
-import {Team} from "@/components/types/Team";
+import {Team} from "@/types/Team";
 import PlayerTableModal from "@/components/PlayerTableModal.vue";
-import {Player} from "@/components/types/Player";
+import {Player} from "@/types/Player";
 import {PaginationProps} from "naive-ui/es/pagination/src/Pagination";
+import AddNewTeamModal from "@/components/AddNewTeamModal.vue";
 
 const showModal = ref(false);
+const toggleAddNewModal = ref(false);
 const playersRef = ref<Player[]>([]);
 const page = ref(1);
 const pagination: PaginationProps = reactive({

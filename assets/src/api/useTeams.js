@@ -14,13 +14,30 @@ export var teamsRef = reactive({
     loading: true,
     error: null,
 });
-export var getTeams = function () { return __awaiter(void 0, void 0, void 0, function () {
+export var getTeams = function (params) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, client.get("/team")
+            case 0: return [4 /*yield*/, client.get("/team", { params: params })
                     .then(function (response) {
                     teamsRef.teams = response.data;
                     teamsRef.loading = false;
+                }).catch(function (error) {
+                    teamsRef.error = error;
+                    teamsRef.loading = false;
+                }).finally(function () {
+                    teamsRef.loading = false;
+                })];
+            case 1: return [2 /*return*/, _a.sent()];
+        }
+    });
+}); };
+export var addNewTeam = function (data) { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, client.post("/team/add", data)
+                    .then(function (response) {
+                    teamsRef.loading = false;
+                    return response.data;
                 }).catch(function (error) {
                     teamsRef.error = error;
                     teamsRef.loading = false;

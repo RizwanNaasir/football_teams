@@ -1,5 +1,7 @@
 <template>
-  <teams-table/>
+  <n-message-provider>
+    <teams-table/>
+  </n-message-provider>
 </template>
 
 <script setup lang="ts">
