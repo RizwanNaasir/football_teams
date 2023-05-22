@@ -2,11 +2,19 @@
   <n-card style="padding: 4rem" :title="`Football Teams (${teamsRef.teams.pagination.total})`">
     <template #header-extra>
       <n-button
-          style="margin-top: 10px"
+          style="margin: 10px"
           size="small"
           @click="() => toggleAddNewModal = !toggleAddNewModal"
       >
         Add Team and Players
+      </n-button>
+      <n-button
+          style="margin: 10px"
+          size="small"
+          @click="() => redirect('marketplace')"
+          type="primary"
+      >
+        Go to Marketplace
       </n-button>
     </template>
     <n-data-table
@@ -23,6 +31,7 @@
 </template>
 <script setup lang="ts">
 import {h, onMounted, reactive, ref} from 'vue'
+import {useRouter} from 'vue-router'
 import type {DataTableColumns} from 'naive-ui'
 import {NButton, NDataTable, useMessage} from "naive-ui";
 import {getTeams, pageRef, teamsRef} from "@/api/useTeams";
@@ -36,7 +45,10 @@ const showModal = ref(false);
 const toggleAddNewModal = ref(false);
 const playersRef = ref<Player[]>([]);
 const message = useMessage();
-
+const router = useRouter();
+const redirect = (path: string) => {
+  router.push({path: path});
+}
 async function updateTable(page: number) {
   await getTeams({page: page});
   pagination.page = page;

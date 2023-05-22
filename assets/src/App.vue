@@ -1,12 +1,11 @@
 <template>
   <n-message-provider>
-    <teams-table/>
+    <router-view></router-view>
   </n-message-provider>
 </template>
 
 <script setup lang="ts">
 import {defineComponent} from "vue";
-import TeamsTable from "@/components/TeamsTable.vue";
 
 defineComponent({
   name: 'App',
