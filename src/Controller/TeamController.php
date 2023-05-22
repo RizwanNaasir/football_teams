@@ -20,21 +20,21 @@ class TeamController extends AbstractController
     #[Route('/team', name: 'team')]
     public function index(EntityManagerInterface $entity, PaginatorInterface $paginator , Request $request,): Response
     {
-        $query = $entity->getRepository(Team::class)->createQueryBuilder('t')->getQuery();
+        $query = $entity->getRepository(Team::class)->createQueryBuilder('t')->orderBy('t.id','desc')->getQuery();
 
         $query = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1), // Get the current page from the request
             $request->query->getInt('perPage', 10) // Number of items per page
         );
-        return $this->paginate($query);
+        return $this->getPaginatedResults($query);
     }
 
     /**
      * @param PaginationInterface $query
      * @return JsonResponse
      */
-    public function paginate(PaginationInterface $query): JsonResponse
+    public function getPaginatedResults(PaginationInterface $query): JsonResponse
     {
         return $this->json([
             'data' => $query->getItems(),

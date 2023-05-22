@@ -71,7 +71,7 @@
 import {ref, watch} from "vue";
 import {FormInst, useMessage} from "naive-ui";
 import {Team} from "@/types/Team";
-import {addNewTeam} from "@/api/useTeams";
+import {addNewTeam, getTeams, pageRef} from "@/api/useTeams";
 
 const props = defineProps({
   visible: Boolean,
@@ -132,10 +132,11 @@ const handleValidateClick = (e: MouseEvent) => {
   formRef.value?.validate(async (errors) => {
     if (!errors) {
       await addNewTeam(formValue.value.team)
-          .then((res) => {
+          .then(async (res) => {
             message.success(res.message as string);
             modal.value = false;
             formValue.value = initializeForm;
+            await getTeams({page: pageRef.value})
           });
     } else {
       errors.forEach((error) => {

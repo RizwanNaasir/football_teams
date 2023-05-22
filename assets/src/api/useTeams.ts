@@ -1,5 +1,5 @@
 import {client} from "./client";
-import {reactive} from "vue";
+import {reactive, ref} from "vue";
 import {Team} from "@/types/Team";
 
 export type TeamsRefT = {
@@ -28,6 +28,8 @@ export const teamsRef: TeamsRefT = reactive({
     loading: true,
     error: null,
 })
+export const pageRef = ref<number>(1);
+
 type Params = {
     page: number,
 }

@@ -1,6 +1,6 @@
 import { __awaiter, __generator } from "tslib";
 import { client } from "./client";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 export var teamsRef = reactive({
     teams: {
         data: [],
@@ -14,6 +14,7 @@ export var teamsRef = reactive({
     loading: true,
     error: null,
 });
+export var pageRef = ref(1);
 export var getTeams = function (params) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
