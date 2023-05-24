@@ -1,11 +1,4 @@
-import {
-    createRouter,
-    createWebHistory,
-    NavigationGuardNext,
-    RouteLocationNormalized,
-    RouteLocationNormalizedLoaded,
-    RouteRecordRaw
-} from "vue-router";
+import {createRouter, createWebHistory, NavigationGuardNext, RouteLocationNormalized, RouteRecordRaw} from "vue-router";
 
 const routes: RouteRecordRaw[] = [
     {
@@ -28,14 +21,10 @@ const router = createRouter({
     history: createWebHistory('/'),
     linkExactActiveClass: "active",
     routes,
-    scrollBehavior(to: RouteLocationNormalized, from: RouteLocationNormalizedLoaded, savedPosition) {
-        // Reset the scroll position to the top of the page on navigation
-        return {top: 0};
-    },
 });
 
-router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+router.beforeEach((_to: RouteLocationNormalized, _from: RouteLocationNormalized, next: NavigationGuardNext) => {
     next();
 });
 
-export default router;
+export {router};

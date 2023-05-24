@@ -82,6 +82,7 @@ const message = useMessage();
 const size = ref<'small' | 'medium' | 'large'>('medium')
 const initializeForm = {
   team: {
+    id: 0,
     name: '',
     country: '',
     moneyBalance: 0,
@@ -131,7 +132,7 @@ const handleValidateClick = (e: MouseEvent) => {
   e.preventDefault()
   formRef.value?.validate(async (errors) => {
     if (!errors) {
-      await addNewTeam(formValue.value.team)
+      await addNewTeam(formValue.value.team as unknown as Team)
           .then(async (res) => {
             message.success(res.message as string);
             modal.value = false;

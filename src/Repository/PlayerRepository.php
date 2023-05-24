@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Player;
 use App\Entity\Team;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -78,5 +79,24 @@ class PlayerRepository extends ServiceEntityRepository
         }
 
         return $player;
+    }
+
+    public function getPlayers(mixed $search, $teamId = null): Query
+    {
+        $query = $this->createQueryBuilder('p')
+            ->leftJoin('p.team', 't')
+            ->addSelect('t')
+            ->orderBy('p.id', 'desc');
+        if (isset($teamId)) {
+            $query->where('t.id != :teamId')
+                ->setParameter('teamId', $teamId);
+        }
+        if (isset($search)) {
+            $query->where('p.name LIKE :search')
+                ->orWhere('p.surname LIKE :search')
+                ->setParameter('search', '%' . $search . '%');
+        }
+
+        return $query->getQuery();
     }
 }

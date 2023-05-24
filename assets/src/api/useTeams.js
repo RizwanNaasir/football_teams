@@ -1,7 +1,7 @@
-import { __awaiter, __generator } from "tslib";
+import { __awaiter } from "tslib";
 import { client } from "./client";
 import { reactive, ref } from "vue";
-export var teamsRef = reactive({
+export const teamsRef = reactive({
     teams: {
         data: [],
         pagination: {
@@ -12,41 +12,60 @@ export var teamsRef = reactive({
         }
     },
     loading: true,
-    error: null,
+    response: null,
+    search(query) {
+        teamsRef.loading = true;
+        getTeams({ page: 1, query: { search: query } })
+            .finally(() => {
+            teamsRef.loading = false;
+        });
+    },
+    find(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            teamsRef.loading = true;
+            try {
+                return yield findTeam(id);
+            }
+            finally {
+                teamsRef.loading = false;
+            }
+        });
+    }
 });
-export var pageRef = ref(1);
-export var getTeams = function (params) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, client.get("/team", { params: params })
-                    .then(function (response) {
-                    teamsRef.teams = response.data;
-                    teamsRef.loading = false;
-                }).catch(function (error) {
-                    teamsRef.error = error;
-                    teamsRef.loading = false;
-                }).finally(function () {
-                    teamsRef.loading = false;
-                })];
-            case 1: return [2 /*return*/, _a.sent()];
-        }
+export const pageRef = ref(1);
+export const getTeams = (params) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield client.get("/team", { params })
+        .then((response) => {
+        teamsRef.teams = response.data;
+        teamsRef.loading = false;
+    }).catch((error) => {
+        teamsRef.response = error.response;
+        teamsRef.loading = false;
+    }).finally(() => {
+        teamsRef.loading = false;
     });
-}); };
-export var addNewTeam = function (data) { return __awaiter(void 0, void 0, void 0, function () {
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, client.post("/team/add", data)
-                    .then(function (response) {
-                    teamsRef.loading = false;
-                    return response.data;
-                }).catch(function (error) {
-                    teamsRef.error = error;
-                    teamsRef.loading = false;
-                }).finally(function () {
-                    teamsRef.loading = false;
-                })];
-            case 1: return [2 /*return*/, _a.sent()];
-        }
+});
+export const findTeam = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield client.get("/team/" + id)
+        .then((response) => {
+        return response.data;
+    }).catch((error) => {
+        teamsRef.response = error.response;
+        teamsRef.loading = false;
+    }).finally(() => {
+        teamsRef.loading = false;
     });
-}); };
+});
+export const addNewTeam = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield client.post("/team/add", data)
+        .then((response) => {
+        teamsRef.loading = false;
+        return response.data;
+    }).catch((error) => {
+        teamsRef.response = error.response;
+        teamsRef.loading = false;
+    }).finally(() => {
+        teamsRef.loading = false;
+    });
+});
 //# sourceMappingURL=useTeams.js.map

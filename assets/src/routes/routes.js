@@ -1,31 +1,27 @@
 import { createRouter, createWebHistory } from "vue-router";
-var routes = [
+const routes = [
     {
         name: "Home",
         path: "/",
-        component: function () { return import(/* webpackChunkName: "Home" */ "@/views/pages/Home.vue"); },
+        component: () => import(/* webpackChunkName: "Home" */ "@/views/pages/Home.vue"),
     },
     {
         name: "MarketPlace",
         path: "/marketplace",
-        component: function () { return import(/* webpackChunkName: "Marketplace" */ "@/views/pages/MarketPlace.vue"); },
+        component: () => import(/* webpackChunkName: "Marketplace" */ "@/views/pages/MarketPlace.vue"),
     },
     {
         path: "/:catchAll(.*)",
-        component: function () { return import(/* webpackChunkName: "Blank" */ "@/views/pages/404.vue"); },
+        component: () => import(/* webpackChunkName: "Blank" */ "@/views/pages/404.vue"),
     },
 ];
-var router = createRouter({
+const router = createRouter({
     history: createWebHistory('/'),
     linkExactActiveClass: "active",
-    routes: routes,
-    scrollBehavior: function (to, from, savedPosition) {
-        // Reset the scroll position to the top of the page on navigation
-        return { top: 0 };
-    },
+    routes,
 });
-router.beforeEach(function (to, from, next) {
+router.beforeEach((_to, _from, next) => {
     next();
 });
-export default router;
+export { router };
 //# sourceMappingURL=routes.js.map
