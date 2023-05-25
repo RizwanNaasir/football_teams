@@ -34,11 +34,12 @@
         <n-button
             size="small"
             type="primary"
-            :disabled="selectedTeam?.moneyBalance <= 0"
-            @click="() => $router.push('/my-team')"
+            :disabled="selectedTeam?.players?.length <= 0"
+            @click="() => salePlayerModalToggle = !salePlayerModalToggle"
         >
           Sale Players
         </n-button>
+        <sale-players-modal :players="selectedTeam?.players" :visible="salePlayerModalToggle" />
       </template>
       Own Players: {{ selectedTeam?.players?.length }}
     </n-card>
@@ -67,10 +68,12 @@ import GridOfPlayers from "@/components/GridOfPlayers.vue";
 import {Team} from "@/types/Team";
 import {Player} from "@/types/Player";
 import {getPlayers, playersRef} from "@/api/usePlayers";
+import SalePlayersModal from "@/components/SalePlayersModal.vue";
 
 const loadingBar = useLoadingBar()
 const selection = ref(0);
 const selectedTeam = ref<Team | null>(null);
+const salePlayerModalToggle = ref(false);
 provide('selectedTeam', selectedTeam)
 
 

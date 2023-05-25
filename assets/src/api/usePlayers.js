@@ -21,4 +21,16 @@ export const buyPlayerFromTeam = ({ playerId, teamId, amount }) => __awaiter(voi
         playersRef.value.response = error.response;
     });
 });
+export const sellPlayersToTeam = (params) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield client.post(`/team/${params.sellingTeam.id}/sell-players`, {
+        playerIds: params.playerIds,
+        targetTeamId: params.targetTeamId,
+        amount: params.amount,
+    })
+        .then((response) => {
+        playersRef.value.response = response;
+    }).catch((error) => {
+        playersRef.value.response = error.response;
+    });
+});
 //# sourceMappingURL=usePlayers.js.map

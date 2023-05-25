@@ -42,7 +42,7 @@ const columns = [
   },
   {
     title: 'Surname',
-    key: 'surname',
+    key: 'surName',
     width: 200
   }
 ]

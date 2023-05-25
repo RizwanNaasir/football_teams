@@ -68,13 +68,13 @@ class PlayerRepository extends ServiceEntityRepository
 
     public function createOrGetPlayer(array $playerData, Team $team): ?Player
     {
-        $player = $this->findOneBy(['name' => $playerData['name'], 'surname' => $playerData['surname']]);
+        $player = $this->findOneBy(['name' => $playerData['name'], 'surname' => $playerData['surName']]);
 
         if (!$player) {
             $player = new Player();
             $player->setTeam($team);
             $player->setName($playerData['name']);
-            $player->setSurName($playerData['surname']);
+            $player->setSurName($playerData['surName']);
             $this->save($player, true);
         }
 

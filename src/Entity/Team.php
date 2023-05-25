@@ -26,17 +26,9 @@ class Team
 
     #[ORM\OneToMany(mappedBy: "team", targetEntity: Player::class, cascade: ['persist'])]
     private Collection $players;
-
-    #[ORM\OneToMany(mappedBy: "buyer", targetEntity: PlayerTransfer::class, cascade: ['persist'])]
-    private Collection $purchasedPlayers;
-
-    #[ORM\OneToMany(mappedBy: "seller", targetEntity: PlayerTransfer::class, cascade: ['persist'])]
-    private Collection $soldPlayers;
     public function __construct()
     {
         $this->players = new ArrayCollection();
-        $this->purchasedPlayers = new ArrayCollection();
-        $this->soldPlayers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -119,12 +111,6 @@ class Team
     public function buyPlayer(Player $player): void
     {
         if (!$this->players->contains($player)) {
-            $transfer = new PlayerTransfer(
-                $player,
-                $this,
-                $player->getTeam(),
-            );
-            $this->purchasedPlayers->add($transfer);
             $player->setTeam($this);
             $this->players->add($player);
         }
@@ -138,12 +124,6 @@ class Team
     public function sellPlayer(Player $player): void
     {
         if ($this->players->contains($player)) {
-            $transfer = new PlayerTransfer(
-                $player,
-                $player->getTeam(),
-                $this,
-            );
-            $this->soldPlayers->add($transfer);
             $player->setTeam(null);
             $this->players->removeElement($player);
         }

@@ -4,7 +4,7 @@ import {Ref} from "@vue/reactivity";
 export interface Player {
     id?: number
     name: string
-    surname: string
+    surName: string
     team?: Team,
     price?: Ref<number>|any
 }

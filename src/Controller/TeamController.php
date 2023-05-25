@@ -80,7 +80,7 @@ class TeamController extends AbstractController
         $teamId = $request->query->get('team_id');
         /** @var PlayerRepository $playerRepository */
         $playerRepository = $entity->getRepository(Player::class);
-        $players = $playerRepository->getPlayers($search,$teamId);
+        $players = $playerRepository->getPlayers($search, $teamId);
         return $this->json(data: [
             'data' => $players->getResult()
         ], context: $this->normalizer());
@@ -111,6 +111,28 @@ class TeamController extends AbstractController
         $entity->flush();
         return $this->json([
             'message' => 'Player bought successfully'
+        ]);
+    }
+
+    #[Route('/team/{id}/sell-players', name: 'team_sell', methods: ['POST'])]
+    public function sellPlayers(Team $team, Request $request, EntityManagerInterface $entity): JsonResponse
+    {
+        $playerIds = $request->toArray()['playerIds'];
+        $amount = $request->toArray()['amount'];
+        $targetTeamId = $request->toArray()['targetTeamId'];
+        $targetTeam = $entity->getRepository(Team::class)->find($targetTeamId);
+        /** @var PlayerRepository $playerRepository */
+        $playerRepository = $entity->getRepository(Player::class);
+        $players = $playerRepository->findBy(['id' => $playerIds]);
+        $team->setMoneyBalance($team->getMoneyBalance() + $amount);
+        $targetTeam->setMoneyBalance($targetTeam->getMoneyBalance() - $amount);
+
+        foreach ($players as $player) $player->setTeam($targetTeam);
+
+        $entity->flush();
+
+        return $this->json([
+            'message' => 'Players sold successfully'
         ]);
     }
 

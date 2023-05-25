@@ -14,7 +14,7 @@
           :label-width="80"
           :model="formValue"
           :rules="rules"
-          :size="size"
+          size="medium"
       >
         <n-space vertical size="large">
           <n-layout>
@@ -39,12 +39,12 @@
               <n-form-item
                   v-for="(item, index) in formValue.team.players"
                   :key="index"
-                  :label="`Player (${item.name +' '+ item.surname} )`"
+                  :label="`Player (${item.name +' '+ item.surName} )`"
                   :path="`players[${index}].hobby`"
                   :rule="playerRule"
               >
                 <n-input v-model:value="item.name" clearable/>
-                <n-input v-model:value="item.surname" clearable/>
+                <n-input v-model:value="item.surName" clearable/>
                 <n-button style="margin-left: 12px" @click="removeItem(index)">
                   Remove
                 </n-button>
@@ -79,8 +79,7 @@ const props = defineProps({
 const modal = ref(false);
 const formRef = ref<FormInst | null>(null)
 const message = useMessage();
-const size = ref<'small' | 'medium' | 'large'>('medium')
-const initializeForm = {
+const initializeForm: { team :Team } = {
   team: {
     id: 0,
     name: '',
@@ -89,7 +88,7 @@ const initializeForm = {
     players: [
       {
         name: '',
-        surname: ''
+        surName: ''
       }
     ]
   }
@@ -124,7 +123,7 @@ const removeItem = (index: number) => {
 const addItem = () => {
   formValue.value.team.players.push({
     name: '',
-    surname: ''
+    surName: ''
   })
 }
 
