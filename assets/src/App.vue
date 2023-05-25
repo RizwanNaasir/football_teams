@@ -1,5 +1,5 @@
 <template>
-  <n-message-provider>
+  <n-message-provider placement="top-right">
     <n-loading-bar-provider>
       <router-view></router-view>
     </n-loading-bar-provider>
