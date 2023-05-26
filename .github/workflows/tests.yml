@@ -37,10 +37,9 @@ jobs:
 
       - name: Create Database
         run: |
-          mkdir -p var/
-          touch var/data.db
-          bin/console doctrine:database:create --env=test
-          bin/console doctrine:schema:create --env=test
+          php -r "file_exists('var/data.db') || touch('var/data.db');"
+          php bin/console doctrine:database:create --env=test
+          php bin/console doctrine:schema:create --env=test
 
       - name: Execute Tests (Unit and Feature tests) via PHPUnit
         env:
