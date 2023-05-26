@@ -37,6 +37,7 @@ jobs:
 
       - name: Create Database
         run: |
+          mkdir -p var/
           touch var/data.db
           bin/console doctrine:database:create --env=test
           bin/console doctrine:schema:create --env=test
