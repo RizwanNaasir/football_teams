@@ -1,43 +1,61 @@
 # Football Team Management App
-This is a football team management application built with Symfony PHP Framework and Vue.js. The application allows you to manage football teams, their players, and perform buying/selling transactions between teams.
+
+This is a football team management application built with Symfony PHP Framework and Vue.js. The application allows you
+to manage football teams, their players, and perform buying/selling transactions between teams.
+
+## Requirements
+
+- PHP 8.1 or higher
+- Composer
+- Node.js 18.0 or higher
 
 Installation
 Clone the repository:
 
 ```bash 
-git clone https://github.com/your/repository.git
+git clone https://github.com/RizwanNaasir/football_teams_inter_task.git
 ```
 
 ## Install backend dependencies:
 
 ```bash
-cd backend
+cd football_teams_inter_task
 composer install
 ```
+
 ## Configure the database connection:
 
 Copy the .env file and configure the database connection settings.
+
+## Create the database:
+
+```bash
+php bin/console doctrine:database:create
+```
+
 Run the database migrations to create the necessary tables:
 
 ```php
-php bin/console doctrine:migrations:migrate
+php bin/console doctrine:schema:update --force
 ```
 
-Install frontend dependencies:
+Optionally load the fixtures to populate the database with sample data:
+
+```php
+php bin/console doctrine:fixtures:load --no-interaction
+```
+
+## Install frontend dependencies:
 
 ```bash
-npm install
+npm install && npm run dev
 ```
+
 Run the Application:
 
 Start the Symfony development server:
 ```bash
 symfony server:start
-```
-Compile and run the Vue.js frontend:
-
-```bash
-npm run dev
 ```
 Access the Application:
 
